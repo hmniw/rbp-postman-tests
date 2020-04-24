@@ -1,0 +1,383 @@
+{
+	"info": {
+		"_postman_id": "b79b4cce-9220-45e1-a676-a4ee8d0f4939",
+		"name": "RBP Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RC - getRooms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aa4b3559-0e6a-4fb9-a3f4-b60362af8b2c",
+						"exec": [
+							"pm.test(\"Check that there is only 1 room\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.rooms.length).to.equal(1)",
+							"})",
+							"",
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://automationintesting.online/room/",
+					"protocol": "https",
+					"host": [
+						"automationintesting",
+						"online"
+					],
+					"path": [
+						"room",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AC - login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c04cde1-a44f-49f5-8e15-a23edf7f844c",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"password\",\n\t\"username\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://automationintesting.online/auth/login",
+					"protocol": "https",
+					"host": [
+						"automationintesting",
+						"online"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RC - createRoom",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c7741b93-1d58-4121-bc35-4ce75ba69f01",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6e5b055-74b7-41ee-9569-b182ba396ee0",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Check that there is a room ID\", function() {",
+							"    pm.expect(jsonData.roomid).to.exist",
+							"})",
+							"",
+							"pm.test(\"Status code is 201\", function() {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"postman.setEnvironmentVariable(\"roomId\", jsonData.roomid)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accessible\": true,\n    \"description\": \"This is a test room\",\n    \"features\": [\n        \"TV, WiFi\"\n    ],\n    \"image\": \"https://www.mwtestconsultancy.co.uk/img/testim/room1.jpg\",\n    \"roomNumber\": \"99\",\n    \"roomPrice\": \"200\",\n    \"type\": \"Double\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://automationintesting.online/room/",
+					"protocol": "https",
+					"host": [
+						"automationintesting",
+						"online"
+					],
+					"path": [
+						"room",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RC - getRoom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "139e36b7-e8b6-48b6-8fbf-3135025afd16",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://automationintesting.online/room/{{roomId}}",
+					"protocol": "https",
+					"host": [
+						"automationintesting",
+						"online"
+					],
+					"path": [
+						"room",
+						"{{roomId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RC - updateRoom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b48d096-8c5c-4fa3-a1f8-e3c0e2ed379c",
+						"exec": [
+							"pm.test(\"Status code is 202\", function() {",
+							"    pm.response.to.have.status(202)",
+							"})",
+							"",
+							"pm.test(\"Accessibility is now set to false\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.accessible).to.equal(false);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accessible\": false,\n    \"description\": \"This is a test room\",\n    \"features\": [\n        \"TV, WiFi\"\n    ],\n    \"image\": \"https://www.mwtestconsultancy.co.uk/img/testim/room1.jpg\",\n    \"roomNumber\": \"99\",\n    \"roomPrice\": \"200\",\n    \"type\": \"Double\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://automationintesting.online/room/{{roomId}}",
+					"protocol": "https",
+					"host": [
+						"automationintesting",
+						"online"
+					],
+					"path": [
+						"room",
+						"{{roomId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RC - deleteRoom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "94658e68-cec2-4cdc-b8db-fc56da7d646d",
+						"exec": [
+							"pm.test(\"Status code is 202\", function() {",
+							"    pm.response.to.have.status(202)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://automationintesting.online/room/{{roomId}}",
+					"protocol": "https",
+					"host": [
+						"automationintesting",
+						"online"
+					],
+					"path": [
+						"room",
+						"{{roomId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RC - getRooms Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "838cdc4e-366b-45ad-ac2f-fc8a11564836",
+						"exec": [
+							"pm.test(\"Check that there is only 1 room\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.rooms.length).to.equal(1)",
+							"})",
+							"",
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://automationintesting.online/room/",
+					"protocol": "https",
+					"host": [
+						"automationintesting",
+						"online"
+					],
+					"path": [
+						"room",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AC - logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9976583a-f3de-4d20-9c08-ec3d80d1d1e0",
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\": \"{{token}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://automationintesting.online/auth/logout",
+					"protocol": "https",
+					"host": [
+						"automationintesting",
+						"online"
+					],
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
