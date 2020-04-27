@@ -1,8 +1,6 @@
-PM_ENV_VAR_PATH="environment_variables.postman_environment.json"
-
 run_collection() {
     collection=$1
-    newman run ${collection} -e ${PM_ENV_VAR_PATH} -r htmlextra --reporter-htmlextra-title "RBP Postman Test Report"
+    ${PM_NEWMAN_PATH} run ${PM_COLLECTION_PATH} -e ${PM_ENV_VAR_PATH} -r htmlextra --reporter-htmlextra-title "RBP Postman Test Report"
 
     if [ "$?" == 1 ]; then
         echo "should fail the build"\
@@ -14,4 +12,4 @@ run_collection() {
 
 rm -r newman
 
-run_collection room_controller_tests.postman_collection.json
+run_collection
