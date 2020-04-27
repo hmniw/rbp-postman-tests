@@ -10,6 +10,4 @@ run_collection() {
     sleep 1
 }
 
-rm -r newman
-
 run_collection
