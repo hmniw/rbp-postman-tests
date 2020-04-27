@@ -12,4 +12,6 @@ run_collection() {
     sleep 1
 }
 
+rm -r newman
+
 run_collection room_controller_tests.postman_collection
