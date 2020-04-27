@@ -1,4 +1,4 @@
-PM_ENV_VAR_PATH="environment_variables.postman_environment"
+PM_ENV_VAR_PATH="environment_variables.postman_environment.json"
 
 run_collection() {
     collection=$1
@@ -14,4 +14,4 @@ run_collection() {
 
 rm -r newman
 
-run_collection room_controller_tests.postman_collection
+run_collection room_controller_tests.postman_collection.json
