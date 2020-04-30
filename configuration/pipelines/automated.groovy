@@ -15,7 +15,7 @@ try {
 
         stage( 'Run Tests' ) {
             powershell './run-tests.ps1'
-            publishHTML
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'newman', reportFiles: 'report.html', reportName: 'HTML Report', reportTitles: ''])
         }
 
     }
