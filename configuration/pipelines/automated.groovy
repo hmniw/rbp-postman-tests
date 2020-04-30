@@ -14,7 +14,7 @@ try {
         }
 
         stage( 'Run Tests' ) {
-            bat 'run-tests.ps1'
+            powershell './run-tests.ps1'
         }
 
     }
