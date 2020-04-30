@@ -14,7 +14,6 @@ try {
         }
 
         stage( 'Run Tests' ) {
-            dir('rbp.postman.tests')
             bat 'run-tests.ps1'
         }
 
