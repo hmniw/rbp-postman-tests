@@ -5,19 +5,17 @@ try {
 
     node( 'master' ) {
 
-        %SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe 'Write-Output "Hello World!"'
-
         stage( 'Initialise' ) {
             git url: 'https://github.com/hmniw/rbp-postman-tests.git', branch: 'master', credentialsId: CREDENTIALS_ID
         }
 
         stage( 'Install Dependencies' ) {
-            %SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe 'npm install -g newman'
-            %SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe 'npm install'
+            powershell 'npm install -g newman'
+            powershell 'npm install'
         }
 
         stage( 'Run Tests' ) {
-            %SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe '../../run-tests.ps1'
+            powershell '../../run-tests.ps1'
         }
 
     }
