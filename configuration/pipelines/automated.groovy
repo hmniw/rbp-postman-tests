@@ -1,5 +1,5 @@
 CREDENTIALS_ID = 'github'
-powershell = '%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
+powershell = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
 
 try {
 
