@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 CREDENTIALS_ID = 'github'
 
 try {
@@ -9,12 +11,12 @@ try {
         }
 
         stage( 'Install Dependencies' ) {
-            powershell 'npm install -g newman'
-            powershell 'npm install'
+            sh 'npm install -g newman'
+            sh 'npm install'
         }
 
         stage( 'Run Tests' ) {
-            powershell 'run-tests.ps1'
+            sh 'run-tests.sh'
         }
 
     }
