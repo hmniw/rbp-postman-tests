@@ -14,7 +14,8 @@ try {
         }
 
         stage( 'Run Tests' ) {
-            powershell '../../run-tests.ps1'
+            dir('rbp.postman.tests')
+            bat 'run-tests.ps1'
         }
 
     }
