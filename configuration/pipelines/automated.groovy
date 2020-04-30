@@ -5,6 +5,8 @@ try {
 
     node( 'master' ) {
 
+        powershell 'Write-Output "Hello World!"'
+        
         stage( 'Initialise' ) {
             git url: 'https://github.com/hmniw/rbp-postman-tests.git', branch: 'master', credentialsId: CREDENTIALS_ID
         }
