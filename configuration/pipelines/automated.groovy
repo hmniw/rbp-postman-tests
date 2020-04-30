@@ -15,6 +15,7 @@ try {
 
         stage( 'Run Tests' ) {
             powershell './run-tests.ps1'
+            publishHTML
         }
 
     }
