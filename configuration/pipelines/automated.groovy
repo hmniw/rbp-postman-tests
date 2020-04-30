@@ -11,7 +11,6 @@ try {
 
         stage( 'Install Dependencies' ) {
             powershell 'npm install -g newman'
-            powershell 'npm install'
         }
 
         stage( 'Run Tests' ) {
