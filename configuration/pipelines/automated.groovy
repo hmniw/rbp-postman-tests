@@ -1,4 +1,5 @@
 CREDENTIALS_ID = 'github'
+powershell = env.powershell
 
 try {
 
