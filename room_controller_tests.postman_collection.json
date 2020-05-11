@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "b79b4cce-9220-45e1-a676-a4ee8d0f4939",
-		"name": "RBP Tests",
+		"name": "room_controller_tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -373,6 +373,49 @@
 					"path": [
 						"auth",
 						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RC - createRoom no Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "157f24c1-050b-4043-841f-b07fb67e84ad",
+						"exec": [
+							"pm.test(\"Status code is 403\", function() {",
+							"    pm.response.to.have.status(403)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accessible\": true,\n    \"description\": \"This is a test room\",\n    \"features\": [\n        \"TV, WiFi\"\n    ],\n    \"image\": \"https://www.mwtestconsultancy.co.uk/img/testim/room1.jpg\",\n    \"roomNumber\": \"99\",\n    \"roomPrice\": \"200\",\n    \"type\": \"Double\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://automationintesting.online/room/",
+					"protocol": "https",
+					"host": [
+						"automationintesting",
+						"online"
+					],
+					"path": [
+						"room",
+						""
 					]
 				}
 			},
